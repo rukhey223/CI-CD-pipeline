@@ -39,5 +39,14 @@ steps:
       git commit -m "Automated image update"
       git push origin main
 
+# Step 5: Deploy to GKE
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      gcloud container clusters get-credentials gitops-cluster --zone us-central1 --project glass-stratum-495015-g7
+      kubectl apply -f gitops-env/kubernetes.yaml
+
 options:
   logging: CLOUD_LOGGING_ONLY
