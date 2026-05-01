@@ -29,12 +29,17 @@ steps:
     args:
     - '-c'
     - |
-      git clone https://rukhey223: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@github.com/rukhey223/gitops-env.git 
-      cd gitops-env
-      sed -i "s|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
-      git config user.email "cloudbuild@example.com"
-      git config user.name "cloudbuild"
-      git commit -am "Automated image update"
-      git push
+      - |
+        # Use the token directly without brackets
+        git clone https://rukhey223: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@github.com/rukhey223/gitops-env.git
+        cd gitops-env
+        # This matches the 'kubernetes.yaml' file I see in your screenshot
+        sed -i "s|image: .*|image: us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
+        git config --global user.email "build-bot@google.com"
+        git config --global user.name "Cloud Build Bot"
+        git add kubernetes.yaml
+        git commit -m "Update image to $SHORT_SHA"
+        # Specify 'origin main' to avoid the 'no upstream' error
+        git push origin main
 options:
  logging: CLOUD_LOGGING_ONLY
