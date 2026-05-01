@@ -37,6 +37,6 @@ steps:
       git config user.email "cloudbuild@example.com"
       git config user.name "cloudbuild"
       git commit -am "Automated image update"
-      git push origin main
+      git push --set-upstream origin master
 options:
  logging: CLOUD_LOGGING_ONLY
