@@ -31,3 +31,5 @@ steps:
       git config user.name "cloudbuild"
       git commit -am "Automated image update"
       git push
+options:
+ logging: CLOUD_LOGGING_ONLY
