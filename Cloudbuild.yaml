@@ -10,18 +10,18 @@ steps:
         pytest --maxfail=1 --disable-warnings -q
 
 # Step 2: Build Docker image
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'build'
-    - '-t'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA'
-    - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+   args:
+     - 'build'
+     - '-t'
+     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA'
+     - '.'
 
 # Step 3: Push image to Artifact Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'push'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA'
+ - name: 'gcr.io/cloud-builders/docker'
+   args:
+     - 'push'
+     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA'
 
 # Step 4: Update manifest in environment repo
 - name: 'gcr.io/cloud-builders/gcloud'
