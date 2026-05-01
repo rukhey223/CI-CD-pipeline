@@ -1,0 +1,33 @@
+steps:
+# Step 1: Run tests (optional here)
+- name: 'python:3.13-slim'
+  args: ['pytest', '--maxfail=1', '--disable-warnings', '-q']
+  dir: '.'
+
+# Step 2: Build Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA'
+    - '.'
+
+# Step 3: Push image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA'
+
+# Step 4: Update manifest in environment repo
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      git clone [source.developers.google.com](https://source.developers.google.com/p/$PROJECT_ID/r/hello-cloudbuild-env)
+      cd hello-cloudbuild-env
+      sed -i "s|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
+      git config user.email "cloudbuild@example.com"
+      git config user.name "cloudbuild"
+      git commit -am "Automated image update"
+      git push
