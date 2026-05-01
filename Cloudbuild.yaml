@@ -30,7 +30,7 @@ steps:
     - '-c'
     - |
         # Step A: Clone using the token (No brackets, no spaces)
-        git clone https://rukhey223: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@github.com/rukhey223/gitops-env.git
+        git clone https://rukhey223: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g1i@github.com/rukhey223/gitops-env.git
         # Step B: Enter the folder
         cd gitops-env
         git config --global user.email "cloudbuild@example.com"
@@ -41,6 +41,6 @@ steps:
         
         git add kubernetes.yaml
         git commit -m "Automated image update to $SHORT_SHA"
-        git push origin main
+        git push origin master
 options:
  logging: CLOUD_LOGGING_ONLY
