@@ -32,7 +32,7 @@ steps:
       git clone https://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@github.com/rukhey223/gitops-env.git
       cd gitops-env
       ls
-      sed -i 's|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g' kubernetes.yaml
+      sed -i "s|image: .*|image: us-central1-docker.pkg.dev/\$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
 
       git config user.email "cloudbuild@example.com"
       git config user.name "cloudbuild"
