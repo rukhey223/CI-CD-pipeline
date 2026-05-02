@@ -42,18 +42,7 @@ steps:
       git add kubernetes.yaml
       git commit -m "Automated image update to $SHORT_SHA"
       git push origin main
-
-
-
     
-    # 3. Push changes back to GitHub
-    git config user.email "cloudbuild@example.com"
-    git config user.name "cloudbuild"
-    git add kubernetes.yaml
-    git commit -m "Automated image update to $SHORT_SHA"
-    git push origin main
-
-
 # Step 5: Deploy to GKE
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
