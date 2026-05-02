@@ -33,6 +33,7 @@ steps:
       cd gitops-env
       ls
       sed -i 's|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g' kubernetes.yaml
+
       git config user.email "cloudbuild@example.com"
       git config user.name "cloudbuild"
       git add .
