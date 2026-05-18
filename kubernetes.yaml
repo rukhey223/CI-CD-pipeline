@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
       - name: app
-        image: us-central1-docker.pkg.dev/YOUR_PROJECT_ID/my-repo/app:latest
+        image: us-central1-docker.pkg.dev/glass-stratum-495015-g7/my-repo/app:3d8fc6b
