@@ -30,7 +30,7 @@ steps:
   - '-c'
   - |
       # 1. Clone the environment repo
-      git clone https://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@github.com/rukhey223/gitops-env.git
+      git 'clone' 'https://github.com/rukhey223/CI-CD-pipeline.git'
       cd gitops-env
       
       # 2. Update the image tag
