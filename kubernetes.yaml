@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: us-central1-docker.pkg.dev/glass-stratum-495015-g7/my-repo/app:8580bf4
+        image: us-central1-docker.pkg.dev/glass-stratum-495015-g7/my-repo/app:8d658d0
         ports:
         - containerPort: 8080
 ---
