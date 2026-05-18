@@ -29,23 +29,20 @@ steps:
   args:
     - '-c'
     - |
-      # 1. Set up Git identity so it allows you to commit
+      # 1. Set up Git identity
       git config --global user.email "cloudbuild@google.com"
       git config --global user.name "Cloud Build"
 
-      # 2. Clone the repository into the runner environment
-      git clone https://$_GH_TOKEN@github.com/rukhey223/CI-CD-pipeline.git
-      
-      # 3. Enter the cloned repository folder
-      cd CI-CD-pipeline
-
-      # 4. Move to the main branch
+      # 2. Make sure you are on the main branch locally
       git checkout main || git checkout -b main
 
-      # 5. Run your sed replacement command (updating the tag to $SHORT_SHA)
+      # 3. Pull any fresh changes (like the kubernetes.yaml you just added)
+      git pull https://$_GH_TOKEN@github.com/rukhey223/CI-CD-pipeline.git main
+
+      # 4. Run the sed replacement command on the root file
       sed -i "s|image: .*|image: us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
 
-      # 6. Stage, commit, and push the change back to GitHub
+      # 5. Stage, commit, and push back to GitHub safely
       git add kubernetes.yaml
       git commit -m "Update application deployment image tag to $SHORT_SHA [skip ci]"
       git push https://$_GH_TOKEN@github.com/rukhey223/CI-CD-pipeline.git main
