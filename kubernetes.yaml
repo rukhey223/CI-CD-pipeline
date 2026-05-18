@@ -19,3 +19,16 @@ spec:
         image: us-central1-docker.pkg.dev/glass-stratum-495015-g7/my-repo/app:8580bf4
         ports:
         - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
