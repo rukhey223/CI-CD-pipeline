@@ -2,10 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-app
+  labels:
+    app: my-app
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: my-app
   template:
+    metadata:
+      labels:
+        app: my-app
     spec:
       containers:
       - name: app
-        image: us-central1-docker.pkg.dev/glass-stratum-495015-g7/my-repo/app:7410bad
+        image: us-central1-docker.pkg.dev/glass-stratum-495015-g7/my-repo/app:latest
+        ports:
+        - containerPort: 8080
