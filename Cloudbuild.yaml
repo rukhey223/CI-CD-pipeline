@@ -27,11 +27,28 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
-  - '-c'
-  - |
-      # 1. Clone the environment repo
+    - '-c'
+    - |
+      # 1. Set up Git identity so it allows you to commit
+      git config --global user.email "cloudbuild@google.com"
+      git config --global user.name "Cloud Build"
+
+      # 2. Clone the repository into the runner environment
+      git clone https://$_GH_TOKEN@github.com/rukhey223/CI-CD-pipeline.git
+      
+      # 3. Enter the cloned repository folder
+      cd CI-CD-pipeline
+
+      # 4. Move to the main branch
+      git checkout main || git checkout -b main
+
+      # 5. Run your sed replacement command (updating the tag to $SHORT_SHA)
+      sed -i "s|image: .*|image: us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
+
+      # 6. Stage, commit, and push the change back to GitHub
+      git add kubernetes.yaml
+      git commit -m "Update application deployment image tag to $SHORT_SHA [skip ci]"
       git push https://$_GH_TOKEN@github.com/rukhey223/CI-CD-pipeline.git main
-      cd gitops-env
       
       # 2. Update the image tag
       sed -i "s|image: .*|image: us-central1-docker.pkg.dev/\$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
