@@ -47,15 +47,7 @@ steps:
       git commit -m "Update application deployment image tag to $SHORT_SHA [skip ci]"
       git push https://$_GH_TOKEN@github.com/rukhey223/CI-CD-pipeline.git main
       
-      # 2. Update the image tag
-      sed -i "s|image: .*|image: us-central1-docker.pkg.dev/\$PROJECT_ID/my-repo/app:$SHORT_SHA|g" kubernetes.yaml
       
-      # 3. Push changes back to GitHub
-      git config user.email "cloudbuild@example.com"
-      git config user.name "cloudbuild"
-      git add kubernetes.yaml
-      git commit -m "Automated image update to $SHORT_SHA"
-      git push origin main
     
 # Step 5: Deploy to GKE
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
